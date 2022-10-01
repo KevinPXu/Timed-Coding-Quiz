@@ -38,20 +38,33 @@ var questionBank = [
     correctAnswer: "d",
   },
 ];
-
-for (var i in questionBank) { 
-  var clicked = false;
-  displayQuestion(i);
-  document.getElementById('button').onclick = function() {
-    clicked = true;
-  }
-  while 
+displayQuestion(0);
+var questionNum = 0;
+function userInput() {
+  console.log("hello2");
+  answerChoiceEl.addEventListener("click", function (event) {
+    var input = "";
+    var element = event.target;
+    console.log(element);
+    if (element.matches("button")) {
+      input = element.getAttribute("data-choice");
+    } else {
+      input = "";
+    }
+    questionNum++;
+    console.log(input);
+    console.log(questionNum);
+    displayQuestion(questionNum);
+  });
 }
 
 function displayQuestion(index) {
+  console.log("hello");
+  console.log("index" + index);
   questionEl.textContent = questionBank[index].question;
   choice1El.textContent = questionBank[index].answerChoices.a;
   choice2El.textContent = questionBank[index].answerChoices.b;
   choice3El.textContent = questionBank[index].answerChoices.c;
   choice4El.textContent = questionBank[index].answerChoices.d;
+  userInput();
 }
