@@ -1,0 +1,29 @@
+:root {
+  --background-color: #fffff3;
+  --header-background: #ff4365;
+  --highscore-header-background: #00d9c0;
+  --button-color: #b7ad99;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#questionDisplay {
+  display: flex;
+  justify-content: center;
+}
+#question {
+  color: blue;
+}
+
+#answerChoices {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+button {
+  background-color: var(--button-color);
+  margin: 5px;
+}
