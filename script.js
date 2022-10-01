@@ -1,9 +1,12 @@
 var questionEl = document.querySelector("#question");
 var answerChoiceEl = document.querySelector("#answerChoices");
+var answerCorrectEl = document.querySelector("#isAnswerCorrect");
+var decisionEl = document.querySelector("#decision");
 var choice1El = document.querySelector("#choice1");
 var choice2El = document.querySelector("#choice2");
 var choice3El = document.querySelector("#choice3");
 var choice4El = document.querySelector("#choice4");
+var questionNum = 0;
 
 var questionBank = [
   {
@@ -38,33 +41,69 @@ var questionBank = [
     correctAnswer: "d",
   },
 ];
-displayQuestion(0);
-var questionNum = 0;
-function userInput() {
-  console.log("hello2");
-  answerChoiceEl.addEventListener("click", function (event) {
-    var input = "";
-    var element = event.target;
-    console.log(element);
-    if (element.matches("button")) {
-      input = element.getAttribute("data-choice");
-    } else {
-      input = "";
-    }
-    questionNum++;
-    console.log(input);
-    console.log(questionNum);
-    displayQuestion(questionNum);
-  });
+
+startQuiz();
+//initially displays the first question when program starts
+function startQuiz() {
+  console.log("hello");
+  renderQuestions(questionNum);
 }
 
-function displayQuestion(index) {
+function renderQuestions(index) {
   console.log("hello");
-  console.log("index" + index);
-  questionEl.textContent = questionBank[index].question;
-  choice1El.textContent = questionBank[index].answerChoices.a;
-  choice2El.textContent = questionBank[index].answerChoices.b;
-  choice3El.textContent = questionBank[index].answerChoices.c;
-  choice4El.textContent = questionBank[index].answerChoices.d;
-  userInput();
+  answerChoiceEl.innerHTML = " ";
+  for (var i = 0; i < 4; i++) {
+    var ansChoice = document.createElement("button");
+    console.log(ansChoice);
+    ansChoice.setAttribute("data-choice", "[i]");
+    ansChoice.textContent(questionBank[index].answerChoices[i]);
+    answerChoiceEl.appendChild(ansChoice);
+    console.log(ansChoice);
+  }
 }
+
+//retrieves data from the userInput and determines if the answer choice was correct.
+
+// function userInput() {
+//   //console.log("hello2");
+//   answerChoiceEl.addEventListener("click", function (event) {
+//     var input = "";
+//     var element = event.target;
+//     //console.log(element);
+//     input = element.getAttribute("data-choice");
+
+//     console.log("questionNum before decision" + questionNum);
+//     //console.log("correct answer: " + questionBank[questionNum].correctAnswer);
+//     if (input === questionBank[questionNum].correctAnswer) {
+//       decisionEl.textContent = decisionEl.getAttribute("data-correct");
+//       //console.log("correct");
+//     } else {
+//       decisionEl.textContent = decisionEl.getAttribute("data-wrong");
+//       //console.log("wrong");
+//     }
+//     questionNum++;
+//     //console.log(input);
+//     //console.log(questionNum);
+
+//     //If we come to the end of the list of questions, it will return out of the function
+//     console.log(questionBank.length);
+//     if (questionNum < questionBank.length) {
+//       displayQuestion(questionNum);
+//     } else {
+//       return;
+//     }
+//   });
+// }
+// // displays each question to the buttons and the question name.
+// function displayQuestion(index) {
+//   //console.log("hello");
+//   console.log("index" + index);
+//   questionEl.textContent = questionBank[index].question;
+//   answerChoiceEl = " ";
+//   for (var i in questionBank.answerChoices){
+//     var ansChoice = answerChoiceEl.createElement("button");
+//     ansChoice.setAttribute("data")
+//   }
+
+//   userInput();
+// }
