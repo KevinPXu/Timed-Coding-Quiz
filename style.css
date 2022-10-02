@@ -16,6 +16,8 @@
 }
 
 #highscoreHeaderContainer {
+  display: flex;
+  justify-content: space-between;
   background-color: var(--highscore-header-background);
 }
 
@@ -28,6 +30,11 @@
 #hiddenStart {
   display: none;
 }
+
+#hideQuestions {
+  display: none;
+}
+
 #questionDisplay {
   display: flex;
   justify-content: center;
@@ -45,4 +52,14 @@
 button {
   background-color: var(--button-color);
   margin: 5px;
+}
+
+#hiddenHighScore {
+  display: none;
+}
+
+#highscoreContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

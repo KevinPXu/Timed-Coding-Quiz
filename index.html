@@ -9,17 +9,18 @@
   </head>
   <header>
     <section id="mainHeaderContainer">
-    <button id="viewHighScore">View Highscore</button>
-    <h4 id="timer"></h4>
-  </section>
-  <section id="highscoreHeaderContainer">
-
-  </section>
+      <button id="viewHighScore">View Highscore</button>
+      <h4 id="timer"></h4>
+    </section>
+    <section id="highscoreHeaderContainer"></section>
   </header>
   <body>
     <section id="startContainer">
       <h1>Coding Quiz</h1>
-      <p>Try to answer all of the questions. Your score will be your time. If you get a question wrong, 5 seconds will be taken off your time. Good Luck!</p> 
+      <p>
+        Try to answer all of the questions. Your score will be your time. If you
+        get a question wrong, 5 seconds will be taken off your time. Good Luck!
+      </p>
       <button id="startButton">START</button>
     </section>
     <section id="container">
@@ -33,9 +34,15 @@
         <button id="choice4" data-choice="d" type="button">Placeholder</button> -->
       </div>
       <div id="isAnswerCorrect">
-        <h2 id="decision" data-correct="Correct!" data-wrong="Incorrect!"></h2> 
+        <h2 id="decision" data-correct="Correct!" data-wrong="Incorrect!"></h2>
       </div>
+    </section>
+    <section id="hiddenHighScore">
+      <form id="highscoreForm">
+        <label for="initials">Your initials</label>
+        <input type="text" id="initials" name="initials" />
+      </form>
+    </section>
     <script src="script.js"></script>
   </body>
 </html>
- 

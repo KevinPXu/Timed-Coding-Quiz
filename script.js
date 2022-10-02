@@ -1,6 +1,7 @@
 var startContEl = document.querySelector("#startContainer");
 var startBtnEl = document.querySelector("#startButton");
 var timerEl = document.querySelector("#timer");
+var mainContEl = document.querySelector("#container");
 var questionEl = document.querySelector("#question");
 var answerChoiceEl = document.querySelector("#answerChoices");
 var answerCorrectEl = document.querySelector("#isAnswerCorrect");
@@ -9,8 +10,15 @@ var choice1El = document.querySelector("#choice1");
 var choice2El = document.querySelector("#choice2");
 var choice3El = document.querySelector("#choice3");
 var choice4El = document.querySelector("#choice4");
+var highscoreHeaderEl = document.querySelector("#mainHeaderContainer");
+var highscoreEl = document.querySelector("#hiddenHighScore");
+var highscoreInputEl = document.querySelector("#initials");
+var highscoreForm = document.querySelector("#highscoreForm");
+var highscoreListEl = document.querySelector("#highscoreList");
 var questionCount = 0;
 var mainTimer = 60;
+var highscores = [];
+var timeInterval = "";
 
 var questionBank = [
   {
@@ -50,6 +58,18 @@ startBtnEl.addEventListener("click", startQuiz);
 //adds event listener to the buttons and runs the UserInput
 answerChoiceEl.addEventListener("click", userInput);
 
+highscoreForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  var highscoreInput = highscoreInputEl.value.trim();
+  if (highscoreInput === "") {
+    return;
+  }
+  highscores.push(highscoreInput);
+  highscoreInput.value = "";
+  storeHighscore();
+  renderHighscore();
+});
+
 //start of functions in program
 
 //initially displays the first question when program starts
@@ -61,13 +81,12 @@ function startQuiz() {
 }
 
 function setTimer() {
-  var timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     mainTimer--;
     timerEl.textContent = "Time remaining: " + mainTimer;
     if (mainTimer === 0) {
       clearInterval(timeInterval);
-      console.log("timer working");
-      //TODO: endGame();
+      endQuiz();
     }
   }, 1000);
 }
@@ -93,6 +112,10 @@ function renderQuestions(index) {
 function userInput(event) {
   var input = "";
   var element = event.target;
+  if (questionCount === questionBank.length - 1) {
+    endQuiz();
+    clearInterval(timeInterval);
+  }
   // console.log(element);
   input = element.getAttribute("data-choice");
   console.log(questionCount);
@@ -105,4 +128,26 @@ function userInput(event) {
   }
   questionCount++;
   renderQuestions(questionCount);
+}
+
+function endQuiz() {
+  mainContEl.setAttribute("id", "hideQuestions");
+  highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
+  highscoreEl.setAttribute("id", "highscoreContainer");
+  storeHighscore();
+  renderHighscore();
+}
+
+function storeHighscore() {
+  localStorage.setItem("highscores", JSON.stringify(highscores));
+}
+
+function renderHighscore() {
+  console.log(highscores);
+  for (var i in highscores) {
+    var highscore = highscores[i];
+    var li = document.createElement("li");
+    li.textContent = highscore;
+    highscoreListEl.appendChild(li);
+  }
 }
