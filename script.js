@@ -10,7 +10,8 @@ var choice1El = document.querySelector("#choice1");
 var choice2El = document.querySelector("#choice2");
 var choice3El = document.querySelector("#choice3");
 var choice4El = document.querySelector("#choice4");
-var highscoreHeaderEl = document.querySelector("#mainHeaderContainer");
+var mainHeaderEl = document.querySelector("#mainHeaderContainer");
+var highscoreHeaderEl = document.querySelector("#hiddenHighscoreHeader");
 var highscoreEl = document.querySelector("#hiddenHighScore");
 var highscoreInputEl = document.querySelector("#initials");
 var highscoreForm = document.querySelector("#highscoreForm");
@@ -65,9 +66,9 @@ highscoreForm.addEventListener("submit", function (event) {
     return;
   }
   highscores.push(highscoreInput);
-  highscoreInput.value = "";
-  storeHighscore();
+  storeHighscore(highscoreInput);
   renderHighscore();
+  highscoreInput.value = "";
 });
 
 //start of functions in program
@@ -115,6 +116,7 @@ function userInput(event) {
   if (questionCount === questionBank.length - 1) {
     endQuiz();
     clearInterval(timeInterval);
+    return;
   }
   // console.log(element);
   input = element.getAttribute("data-choice");
@@ -131,14 +133,24 @@ function userInput(event) {
 }
 
 function endQuiz() {
+  console.log("hello");
   mainContEl.setAttribute("id", "hideQuestions");
+  mainHeaderEl.setAttribute("id", "hideMainHeader");
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
   highscoreEl.setAttribute("id", "highscoreContainer");
   storeHighscore();
   renderHighscore();
 }
 
-function storeHighscore() {
+function storeHighscore(initials) {
+  var person = {
+    initials: "",
+    score: "",
+  };
+  person.initials = initials;
+  person.score = mainTimer;
+  //TODO: for loop to sort array of highscores
+  mainTimer = 60;
   localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
