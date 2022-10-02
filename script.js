@@ -1,3 +1,6 @@
+var startContEl = document.querySelector("#startContainer");
+var startBtnEl = document.querySelector("#startButton");
+var timerEl = document.querySelector("#timer");
 var questionEl = document.querySelector("#question");
 var answerChoiceEl = document.querySelector("#answerChoices");
 var answerCorrectEl = document.querySelector("#isAnswerCorrect");
@@ -7,6 +10,7 @@ var choice2El = document.querySelector("#choice2");
 var choice3El = document.querySelector("#choice3");
 var choice4El = document.querySelector("#choice4");
 var questionCount = 0;
+var mainTimer = 60;
 
 var questionBank = [
   {
@@ -41,20 +45,36 @@ var questionBank = [
     correctAnswer: "4",
   },
 ];
+startBtnEl.addEventListener("click", startQuiz);
 
-startQuiz();
+//adds event listener to the buttons and runs the UserInput
+answerChoiceEl.addEventListener("click", userInput);
+
+//start of functions in program
+
 //initially displays the first question when program starts
 function startQuiz() {
-  var test = 1;
-  console.log("hello");
+  console.log("test start");
+  startContEl.setAttribute("id", "hiddenStart");
+  setTimer();
   renderQuestions(questionCount);
 }
 
-answerChoiceEl.addEventListener("mousedown", userInput);
+function setTimer() {
+  var timeInterval = setInterval(function () {
+    mainTimer--;
+    timerEl.textContent = "Time remaining: " + mainTimer;
+    if (mainTimer === 0) {
+      clearInterval(timeInterval);
+      console.log("timer working");
+      //TODO: endGame();
+    }
+  }, 1000);
+}
 
 //renders the next question after the button is pressed
 function renderQuestions(index) {
-  console.log("hello");
+  console.log("test render");
   questionEl.textContent = questionBank[index].question;
   answerChoiceEl.innerHTML = " ";
   for (var i = 1; i < questionBank[index].answerChoices.length + 1; i++) {
@@ -69,6 +89,7 @@ function renderQuestions(index) {
   }
 }
 
+//calculates if the userInput was correct
 function userInput(event) {
   var input = "";
   var element = event.target;
@@ -80,49 +101,8 @@ function userInput(event) {
     decisionEl.textContent = decisionEl.getAttribute("data-correct");
   } else {
     decisionEl.textContent = decisionEl.getAttribute("data-wrong");
+    mainTimer -= 5;
   }
   questionCount++;
   renderQuestions(questionCount);
 }
-//retrieves data from the userInput and determines if the answer choice was correct.
-
-// function userInput() {
-//   //console.log("hello2");
-//   answerChoiceEl.addEventListener("click", function (event) {
-//     var input = "";
-//     var element = event.target;
-//     //console.log(element);
-//     input = element.getAttribute("data-choice");
-//     if (input === questionBank[questionNum].correctAnswer) {
-//       decisionEl.textContent = decisionEl.getAttribute("data-correct");
-//       //console.log("correct");
-//     } else {
-//       decisionEl.textContent = decisionEl.getAttribute("data-wrong");
-//       //console.log("wrong");
-//     }
-//     questionNum++;
-//     //console.log(input);
-//     //console.log(questionNum);
-
-//     //If we come to the end of the list of questions, it will return out of the function
-//     console.log(questionBank.length);
-//     if (questionNum < questionBank.length) {
-//       displayQuestion(questionNum);
-//     } else {
-//       return;
-//     }
-//   });
-// }
-// // displays each question to the buttons and the question name.
-// function displayQuestion(index) {
-//   //console.log("hello");
-//   console.log("index" + index);
-//   questionEl.textContent = questionBank[index].question;
-//   answerChoiceEl = " ";
-//   for (var i in questionBank.answerChoices){
-//     var ansChoice = answerChoiceEl.createElement("button");
-//     ansChoice.setAttribute("data")
-//   }
-
-//   userInput();
-// }

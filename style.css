@@ -9,6 +9,25 @@
   box-sizing: border-box;
 }
 
+#mainHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--header-background);
+}
+
+#highscoreHeaderContainer {
+  background-color: var(--highscore-header-background);
+}
+
+#startContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#hiddenStart {
+  display: none;
+}
 #questionDisplay {
   display: flex;
   justify-content: center;
