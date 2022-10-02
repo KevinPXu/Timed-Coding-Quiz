@@ -38,7 +38,7 @@ var questionBank = [
       "Call.myFunction()",
       "myFunction()",
     ],
-    correctAnswer: "2",
+    correctAnswer: "4",
   },
 ];
 
@@ -50,10 +50,9 @@ function startQuiz() {
   renderQuestions(questionCount);
 }
 
-While (questionCount < questionBank.length) {
-    
-}
+answerChoiceEl.addEventListener("mousedown", userInput);
 
+//renders the next question after the button is pressed
 function renderQuestions(index) {
   console.log("hello");
   questionEl.textContent = questionBank[index].question;
@@ -63,13 +62,28 @@ function renderQuestions(index) {
     console.log(ansChoice);
     ansChoice.setAttribute("data-choice", [i]);
     var ansChoiceCont = document.createTextNode(
-      questionBank[index].answerChoices[i]
+      questionBank[index].answerChoices[i - 1]
     );
     ansChoice.appendChild(ansChoiceCont);
     answerChoiceEl.appendChild(ansChoice);
   }
 }
 
+function userInput(event) {
+  var input = "";
+  var element = event.target;
+  // console.log(element);
+  input = element.getAttribute("data-choice");
+  console.log(questionCount);
+  console.log("input: " + input);
+  if (input === questionBank[questionCount].correctAnswer) {
+    decisionEl.textContent = decisionEl.getAttribute("data-correct");
+  } else {
+    decisionEl.textContent = decisionEl.getAttribute("data-wrong");
+  }
+  questionCount++;
+  renderQuestions(questionCount);
+}
 //retrieves data from the userInput and determines if the answer choice was correct.
 
 // function userInput() {
@@ -79,9 +93,6 @@ function renderQuestions(index) {
 //     var element = event.target;
 //     //console.log(element);
 //     input = element.getAttribute("data-choice");
-
-//     console.log("questionNum before decision" + questionNum);
-//     //console.log("correct answer: " + questionBank[questionNum].correctAnswer);
 //     if (input === questionBank[questionNum].correctAnswer) {
 //       decisionEl.textContent = decisionEl.getAttribute("data-correct");
 //       //console.log("correct");
