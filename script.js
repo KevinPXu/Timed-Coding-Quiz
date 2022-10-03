@@ -23,7 +23,6 @@ var questionCount = 0;
 var mainTimer = 61;
 var highscores = [];
 var timeInterval = "";
-
 var questionBank = [
   {
     question: "What does the method split do to a string?",
@@ -121,13 +120,13 @@ startBtnEl.addEventListener("click", startQuiz);
 restartBtnEl.addEventListener("click", restartQuiz);
 //adds event listener to the buttons and runs the UserInput
 answerChoiceEl.addEventListener("click", userInput);
+//stores initials from form and stores it in an array
 highscoreForm.addEventListener("submit", function (event) {
   event.preventDefault();
   var highscoreInput = highscoreInputEl.value.trim();
   if (highscoreInput === "") {
     return;
   }
-  highscores.push(highscoreInput);
   storeHighscore(highscoreInput);
   renderHighscore();
   highscoreInput.value = "";
@@ -145,6 +144,7 @@ function startQuiz() {
   renderQuestions(questionCount);
 }
 
+//restarts the quiz on the first question, hides the highscore screen and renders questions
 function restartQuiz() {
   mainTimer = 61;
   setTimer();
@@ -155,6 +155,7 @@ function restartQuiz() {
   renderQuestions(questionCount);
 }
 
+//sets a timer to count down and act as a score for the quiz
 function setTimer() {
   timeInterval = setInterval(function () {
     mainTimer--;
@@ -202,6 +203,11 @@ function userInput(event) {
     decisionEl.textContent = decisionEl.getAttribute("data-wrong");
     mainTimer -= 5;
   }
+
+  var toastInterval = setInterval(function () {
+    decisionEl.textContent = "";
+    clearInterval(toastInterval);
+  }, 1000);
   questionCount++;
   renderQuestions(questionCount);
 }
@@ -212,8 +218,6 @@ function endQuiz() {
   mainHeaderEl.setAttribute("id", "hideMainHeader");
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
   highscoreEl.setAttribute("id", "highscoreContainer");
-  renderHighscore();
-  mainTimer = 61;
   questionCount = 0;
 }
 
@@ -230,17 +234,19 @@ function storeHighscore(initials) {
   //   if (person.score < highscore[i].)
   // }
   highscores.push(person);
-  highscores.sort((a, b) => a.score - b.score);
+  highscores.sort((a, b) => b.score - a.score);
   console.log(highscores);
   localStorage.setItem("highscores", JSON.stringify(highscores));
+  mainTimer = 61;
 }
 
 function renderHighscore() {
-  //console.log(highscores);
+  console.log("highscores:" + JSON.stringify(highscores));
+  highscoreListEl.innerHTML = "";
   for (var i in highscores) {
     var highscore = highscores[i];
     var li = document.createElement("li");
-    li.textContent = highscore + ": " + highscores[i].person.score;
+    li.textContent = highscore.initials + ": " + highscores[i].score;
     highscoreListEl.appendChild(li);
   }
 }
