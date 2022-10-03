@@ -17,8 +17,9 @@ var highscoreEl = document.querySelector("#hiddenHighScore");
 var highscoreInputEl = document.querySelector("#initials");
 var highscoreForm = document.querySelector("#highscoreForm");
 var highscoreListEl = document.querySelector("#highscoreList");
+var clearHighscoreEl = document.querySelector("#clearHighscore");
 var questionCount = 0;
-var mainTimer = 60;
+var mainTimer = 61;
 var highscores = [];
 var timeInterval = "";
 
@@ -55,11 +56,12 @@ var questionBank = [
     correctAnswer: "4",
   },
 ];
+
+//all event listeners for buttons and form element in the highscore page
 startBtnEl.addEventListener("click", startQuiz);
 restartBtnEl.addEventListener("click", restartQuiz);
 //adds event listener to the buttons and runs the UserInput
 answerChoiceEl.addEventListener("click", userInput);
-
 highscoreForm.addEventListener("submit", function (event) {
   event.preventDefault();
   var highscoreInput = highscoreInputEl.value.trim();
@@ -71,6 +73,7 @@ highscoreForm.addEventListener("submit", function (event) {
   renderHighscore();
   highscoreInput.value = "";
 });
+clearHighscoreEl.addEventListener("click", clearHighscore);
 
 //start of functions in program
 
@@ -149,7 +152,7 @@ function endQuiz() {
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
   highscoreEl.setAttribute("id", "highscoreContainer");
   renderHighscore();
-  mainTimer = 60;
+  mainTimer = 61;
   questionCount = 0;
 }
 
@@ -179,4 +182,9 @@ function renderHighscore() {
     li.textContent = highscore + ": " + highscores[i].person.score;
     highscoreListEl.appendChild(li);
   }
+}
+
+function clearHighscore() {
+  highscores = [];
+  renderHighscore();
 }
