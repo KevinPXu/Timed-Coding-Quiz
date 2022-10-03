@@ -3,7 +3,7 @@ var startBtnEl = document.querySelector("#startButton");
 var restartBtnEl = document.querySelector("#restartQuiz");
 var timerEl = document.querySelector("#timer");
 var mainContEl = document.querySelector("#container");
-var answerChoiceEl = document.querySelector("#answerChoices");
+var answerChoicesEl = document.querySelector("#answerChoices");
 var answerCorrectEl = document.querySelector("#isAnswerCorrect");
 var decisionEl = document.querySelector("#decision");
 var choice1El = document.querySelector("#choice1");
@@ -31,7 +31,7 @@ var questionBank = [
       "splits the first character off the string",
       "splits the string into two user selected variables",
     ],
-    correctAnswer: "2",
+    correctAnswer: "deconstructs the string and places it into an array",
   },
   {
     question:
@@ -42,7 +42,7 @@ var questionBank = [
       "The <head> section",
       "The footer section",
     ],
-    correctAnswer: "2",
+    correctAnswer: "The bottom of the <body> section",
   },
   {
     question: 'How do you call a function named "myFunction"?',
@@ -52,7 +52,7 @@ var questionBank = [
       "Call.myFunction()",
       "myFunction()",
     ],
-    correctAnswer: "4",
+    correctAnswer: "myFunction()",
   },
   {
     question: "How can you add a comment in javaScript?",
@@ -62,12 +62,12 @@ var questionBank = [
       "<!--This is a comment",
       "#This is a comment",
     ],
-    correctAnswer: "1",
+    correctAnswer: "//This is a comment",
   },
   {
     question: "How do you find the largest number of 2 and 4?",
     answerChoices: ["Math.Ceil(2,4)", "Math.max(2,4)", "ceil(2,4)", "top(2,4)"],
-    correctAnswer: "2",
+    correctAnswer: "Math.max(2,4)",
   },
   {
     question: "In JavaScript, the symbols + - * and / are:",
@@ -77,13 +77,13 @@ var questionBank = [
       "comparison operators",
       "None of the Above",
     ],
-    correctAnswer: "1",
+    correctAnswer: "operators",
   },
   {
     question:
       "When you want to use JavaScript to manipulate the currently displayed Web page, the Web page's javaScript object name is:",
     answerChoices: ["Frame", "Document", "Window", "browser_window"],
-    correctAnswer: "2",
+    correctAnswer: "Document",
   },
   {
     question: "In JavaScript, the expression x!=y returns false if:",
@@ -93,13 +93,13 @@ var questionBank = [
       "the variables are not equal",
       "None of the above",
     ],
-    correctAnswer: "1",
+    correctAnswer: "the variables are equal",
   },
   {
     question:
       "When you want to use JavaScript to manipulate the browser window, the browser window's JavaScript object name is:",
     answerChoices: ["Frame", "Document", "Window", "browser_window"],
-    correctAnswer: "3",
+    correctAnswer: "Window",
   },
   {
     question:
@@ -110,17 +110,13 @@ var questionBank = [
       "document.forms.info.elements[2]",
       "info.elements[2]",
     ],
-    correctAnswer: "1",
+    correctAnswer: "document.info.elements[1]",
   },
 ];
 
 //all event listeners for buttons and form element in the highscore page
 startBtnEl.addEventListener("click", startQuiz);
 restartBtnEl.addEventListener("click", restartQuiz);
-//adds event listener to the buttons and runs the UserInput
-answerChoiceEl.addEventListener("click", function (event) {
-  answerClicked(event.target);
-});
 //stores initials from form and stores it in an array
 highscoreForm.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -184,13 +180,15 @@ function setQuestionText(questionText) {
 }
 
 function setQuestionChoices(answerChoices) {
-  answerChoiceEl.innerHTML = " ";
+  answerChoicesEl.innerHTML = " ";
   for (var i in answerChoices) {
     var ansChoice = document.createElement("button");
-    ansChoice.setAttribute("data-choice", [i]);
+    ansChoice.addEventListener("click", function (event) {
+      answerClicked(event.target);
+    });
     var ansChoiceCont = document.createTextNode(answerChoices[i]);
     ansChoice.appendChild(ansChoiceCont);
-    answerChoiceEl.appendChild(ansChoice);
+    answerChoicesEl.appendChild(ansChoice);
   }
 }
 
@@ -200,7 +198,7 @@ function answerClicked(target) {
     endQuiz();
     return;
   }
-  checkAccuracy();
+  checkAccuracy(target);
   incrementQuestion();
   var toastInterval = setInterval(function () {
     decisionEl.textContent = "";
@@ -208,9 +206,13 @@ function answerClicked(target) {
   }, 1000);
 }
 
-function checkAccuracy() {
+function checkAccuracy(target) {
   var input = target.getAttribute("data-choice");
-  if (input === questionBank[questionCount].correctAnswer) {
+  console.log(target.textContent);
+  console.log("input:" + input);
+  console.log("correct answer" + questionBank[questionCount].correctAnswer);
+  console.log(input === questionBank[questionCount].correctAnswer);
+  if (target.textContent === questionBank[questionCount].correctAnswer) {
     decisionEl.textContent = decisionEl.getAttribute("data-correct");
   } else {
     decisionEl.textContent = decisionEl.getAttribute("data-wrong");
