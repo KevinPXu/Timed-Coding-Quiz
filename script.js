@@ -141,7 +141,7 @@ function startQuiz() {
   console.log("test start");
   startContEl.setAttribute("id", "hiddenStart");
   setTimer();
-  renderQuestions(questionCount);
+  renderQuestion(questionBank[questionCount]);
 }
 
 //restarts the quiz on the first question, hides the highscore screen and renders questions
@@ -153,7 +153,7 @@ function restartQuiz() {
   highscoreHeaderEl.setAttribute("id", "hiddenHighscoreHeader");
   highscoreEl.setAttribute("id", "hiddenHighScore");
   highscoreForm.setAttribute("id", "highscoreForm");
-  renderQuestions(questionCount);
+  renderQuestion(questionBank[questionCount]);
   highscoreInputEl.disabled = false;
 }
 
@@ -170,15 +170,13 @@ function setTimer() {
 }
 
 //renders the next question after the button is pressed
-function renderQuestions(index) {
+function renderQuestion(question) {
   answerChoiceEl.innerHTML = " ";
-  setQuestionText(questionBank[index].question);
-  for (var i in questionBank[index].answerChoices) {
+  setQuestionText(question.question);
+  for (var i in question.answerChoices) {
     var ansChoice = document.createElement("button");
     ansChoice.setAttribute("data-choice", [i]);
-    var ansChoiceCont = document.createTextNode(
-      questionBank[index].answerChoices[i]
-    );
+    var ansChoiceCont = document.createTextNode(question.answerChoices[i]);
     ansChoice.appendChild(ansChoiceCont);
     answerChoiceEl.appendChild(ansChoice);
   }
@@ -213,7 +211,7 @@ function userInput(event) {
     clearInterval(toastInterval);
   }, 1000);
   questionCount++;
-  renderQuestions(questionCount);
+  renderQuestion(questionBank[questionCount]);
 }
 
 function endQuiz() {
