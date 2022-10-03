@@ -56,6 +56,68 @@ var questionBank = [
     ],
     correctAnswer: "4",
   },
+  {
+    question: "How can you add a comment in javaScript?",
+    answerChoices: [
+      "//This is a comment",
+      "'This is a comment",
+      "<!--This is a comment",
+      "#This is a comment",
+    ],
+    correctAnswer: "1",
+  },
+  {
+    question: "How do you find the largest number of 2 and 4?",
+    answerChoices: ["Math.Ceil(2,4)", "Math.max(2,4)", "ceil(2,4)", "top(2,4)"],
+    correctAnswer: "2",
+  },
+  {
+    question: "In JavaScript, the symbols + - * and / are:",
+    answerChoices: [
+      "operators",
+      "expressions",
+      "comparison operators",
+      "None of the Above",
+    ],
+    correctAnswer: "1",
+  },
+  {
+    question: 'How do you call a function named "myFunction"?',
+    answerChoices: [
+      "call myFunction()",
+      "call function myFunction",
+      "Call.myFunction()",
+      "myFunction()",
+    ],
+    correctAnswer: "4",
+  },
+  {
+    question: "In JavaScript, the expression x!=y returns false if:",
+    answerChoices: [
+      "the variables are equal",
+      "x is less than y",
+      "the variables are not equal",
+      "None of the above",
+    ],
+    correctAnswer: "1",
+  },
+  {
+    question:
+      "When you want to use JavaScript to manipulate the browser window, the browser window's JavaScript object name is:",
+    answerChoices: ["Frame", "Document", "Window", "browser_window"],
+    correctAnswer: "3",
+  },
+  {
+    question:
+      'In JavaScript, what would be the proper form of address in the object hierarchy for the second element in a form called "info"?',
+    answerChoices: [
+      "document.info.elements[1]",
+      "document.info.elements[2]",
+      "document.forms.info.elements[2]",
+      "info.elements[2]",
+    ],
+    correctAnswer: "1",
+  },
 ];
 
 //all event listeners for buttons and form element in the highscore page
