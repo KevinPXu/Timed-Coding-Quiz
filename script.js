@@ -24,7 +24,7 @@ var highscores = [];
 var timeInterval = "";
 var questionBank = [
   {
-    question: "What does the method split do to a string?",
+    questionText: "What does the method split do to a string?",
     answerChoices: [
       "splits the last character off the string",
       "deconstructs the string and places it into an array",
@@ -34,7 +34,7 @@ var questionBank = [
     correctAnswer: "deconstructs the string and places it into an array",
   },
   {
-    question:
+    questionText:
       "Where is the correct place to insert a JavaScript in an HTML document?",
     answerChoices: [
       "Both the <head> section and the <body> section are correct",
@@ -45,7 +45,7 @@ var questionBank = [
     correctAnswer: "The bottom of the <body> section",
   },
   {
-    question: 'How do you call a function named "myFunction"?',
+    questionText: 'How do you call a function named "myFunction"?',
     answerChoices: [
       "call myFunction()",
       "call function myFunction",
@@ -55,7 +55,7 @@ var questionBank = [
     correctAnswer: "myFunction()",
   },
   {
-    question: "How can you add a comment in javaScript?",
+    questionText: "How can you add a comment in javaScript?",
     answerChoices: [
       "//This is a comment",
       "'This is a comment",
@@ -65,12 +65,12 @@ var questionBank = [
     correctAnswer: "//This is a comment",
   },
   {
-    question: "How do you find the largest number of 2 and 4?",
+    questionText: "How do you find the largest number of 2 and 4?",
     answerChoices: ["Math.Ceil(2,4)", "Math.max(2,4)", "ceil(2,4)", "top(2,4)"],
     correctAnswer: "Math.max(2,4)",
   },
   {
-    question: "In JavaScript, the symbols + - * and / are:",
+    questionText: "In JavaScript, the symbols + - * and / are:",
     answerChoices: [
       "operators",
       "expressions",
@@ -80,13 +80,13 @@ var questionBank = [
     correctAnswer: "operators",
   },
   {
-    question:
+    questionText:
       "When you want to use JavaScript to manipulate the currently displayed Web page, the Web page's javaScript object name is:",
     answerChoices: ["Frame", "Document", "Window", "browser_window"],
     correctAnswer: "Document",
   },
   {
-    question: "In JavaScript, the expression x!=y returns false if:",
+    questionText: "In JavaScript, the expression x!=y returns false if:",
     answerChoices: [
       "the variables are equal",
       "x is less than y",
@@ -96,13 +96,13 @@ var questionBank = [
     correctAnswer: "the variables are equal",
   },
   {
-    question:
+    questionText:
       "When you want to use JavaScript to manipulate the browser window, the browser window's JavaScript object name is:",
     answerChoices: ["Frame", "Document", "Window", "browser_window"],
     correctAnswer: "Window",
   },
   {
-    question:
+    questionText:
       'In JavaScript, what would be the proper form of address in the object hierarchy for the second element in a form called "info"?',
     answerChoices: [
       "document.info.elements[1]",
@@ -139,10 +139,9 @@ viewHighscoreEl.addEventListener("click", function () {
 
 //initially displays the first question when program starts
 function startQuiz() {
-  console.log("test start");
   startContEl.setAttribute("id", "hiddenStart");
   setTimer();
-  renderQuestion(questionBank[questionCount]);
+  setQuestion(questionBank[questionCount]);
 }
 
 //restarts the quiz on the first question, hides the highscore screen and renders questions
@@ -154,7 +153,7 @@ function restartQuiz() {
   highscoreHeaderEl.setAttribute("id", "hiddenHighscoreHeader");
   highscoreEl.setAttribute("id", "hiddenHighScore");
   highscoreForm.setAttribute("id", "highscoreForm");
-  renderQuestion(questionBank[questionCount]);
+  setQuestion(questionBank[questionCount]);
   highscoreInputEl.disabled = false;
 }
 
@@ -171,8 +170,8 @@ function setTimer() {
 }
 
 //renders the next question after the button is pressed
-function renderQuestion(question) {
-  setQuestionText(question.question);
+function setQuestion(question) {
+  setQuestionText(question.questionText);
   setQuestionChoices(question.answerChoices);
 }
 
@@ -218,7 +217,7 @@ function checkAccuracy(target) {
 
 function incrementQuestion() {
   questionCount++;
-  renderQuestion(questionBank[questionCount]);
+  setQuestion(questionBank[questionCount]);
 }
 
 function endQuiz() {
@@ -241,10 +240,9 @@ function storeHighscore(initials) {
 
 function renderHighscore() {
   highscoreListEl.innerHTML = "";
-  for (var i in highscores) {
-    var highscore = highscores[i];
+  for (var highscore of highscores) {
     var li = document.createElement("li");
-    li.textContent = highscore.initials + ": " + highscores[i].score;
+    li.textContent = highscore.initials + ": " + highscore.score;
     highscoreListEl.appendChild(li);
   }
 }
