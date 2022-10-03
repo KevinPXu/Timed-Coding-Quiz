@@ -3,7 +3,6 @@ var startBtnEl = document.querySelector("#startButton");
 var restartBtnEl = document.querySelector("#restartQuiz");
 var timerEl = document.querySelector("#timer");
 var mainContEl = document.querySelector("#container");
-var questionEl = document.querySelector("#question");
 var answerChoiceEl = document.querySelector("#answerChoices");
 var answerCorrectEl = document.querySelector("#isAnswerCorrect");
 var decisionEl = document.querySelector("#decision");
@@ -172,19 +171,21 @@ function setTimer() {
 
 //renders the next question after the button is pressed
 function renderQuestions(index) {
-  console.log("test render");
-  questionEl.textContent = questionBank[index].question;
   answerChoiceEl.innerHTML = " ";
-  for (var i = 1; i < questionBank[index].answerChoices.length + 1; i++) {
+  setQuestionText(questionBank[index].question);
+  for (var i in questionBank[index].answerChoices) {
     var ansChoice = document.createElement("button");
-    console.log(ansChoice);
     ansChoice.setAttribute("data-choice", [i]);
     var ansChoiceCont = document.createTextNode(
-      questionBank[index].answerChoices[i - 1]
+      questionBank[index].answerChoices[i]
     );
     ansChoice.appendChild(ansChoiceCont);
     answerChoiceEl.appendChild(ansChoice);
   }
+}
+
+function setQuestionText(questionText) {
+  document.getElementById("question").textContent = questionText;
 }
 
 //calculates if the userInput was correct
