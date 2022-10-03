@@ -140,6 +140,7 @@ viewHighscoreEl.addEventListener("click", function () {
 //initially displays the first question when program starts
 function startQuiz() {
   startContEl.setAttribute("id", "hiddenStart");
+  questionCount = 0;
   setTimer();
   setQuestion(questionBank[questionCount]);
 }
@@ -147,6 +148,7 @@ function startQuiz() {
 //restarts the quiz on the first question, hides the highscore screen and renders questions
 function restartQuiz() {
   mainTimer = 61;
+  questionCount = 0;
   setTimer();
   mainContEl.setAttribute("id", "container");
   mainHeaderEl.setAttribute("id", "mainHeaderContainer");
