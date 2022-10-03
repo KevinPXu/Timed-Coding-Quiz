@@ -18,6 +18,7 @@ var highscoreInputEl = document.querySelector("#initials");
 var highscoreForm = document.querySelector("#highscoreForm");
 var highscoreListEl = document.querySelector("#highscoreList");
 var clearHighscoreEl = document.querySelector("#clearHighscore");
+var viewHighscoreEl = document.querySelector("#viewHighScore");
 var questionCount = 0;
 var mainTimer = 61;
 var highscores = [];
@@ -74,6 +75,7 @@ highscoreForm.addEventListener("submit", function (event) {
   highscoreInput.value = "";
 });
 clearHighscoreEl.addEventListener("click", clearHighscore);
+viewHighscoreEl.addEventListener("click", viewHighscore);
 
 //start of functions in program
 
@@ -86,6 +88,7 @@ function startQuiz() {
 }
 
 function restartQuiz() {
+  mainTimer = 61;
   setTimer();
   mainContEl.setAttribute("id", "container");
   mainHeaderEl.setAttribute("id", "mainHeaderContainer");
@@ -187,4 +190,14 @@ function renderHighscore() {
 function clearHighscore() {
   highscores = [];
   renderHighscore();
+}
+
+function viewHighscore() {
+  mainContEl.setAttribute("id", "hideQuestions");
+  mainHeaderEl.setAttribute("id", "hideMainHeader");
+  highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
+  highscoreEl.setAttribute("id", "highscoreContainer");
+  startContEl.setAttribute("id", "hiddenStart");
+  renderHighscore();
+  clearInterval(timeInterval);
 }
