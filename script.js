@@ -82,14 +82,10 @@ var questionBank = [
     correctAnswer: "1",
   },
   {
-    question: 'How do you call a function named "myFunction"?',
-    answerChoices: [
-      "call myFunction()",
-      "call function myFunction",
-      "Call.myFunction()",
-      "myFunction()",
-    ],
-    correctAnswer: "4",
+    question:
+      "When you want to use JavaScript to manipulate the currently displayed Web page, the Web page's javaScript object name is:",
+    answerChoices: ["Frame", "Document", "Window", "browser_window"],
+    correctAnswer: "2",
   },
   {
     question: "In JavaScript, the expression x!=y returns false if:",
