@@ -118,7 +118,9 @@ var questionBank = [
 startBtnEl.addEventListener("click", startQuiz);
 restartBtnEl.addEventListener("click", restartQuiz);
 //adds event listener to the buttons and runs the UserInput
-answerChoiceEl.addEventListener("click", userInput);
+answerChoiceEl.addEventListener("click", function (event) {
+  answerClicked(event.target);
+});
 //stores initials from form and stores it in an array
 highscoreForm.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -132,7 +134,9 @@ highscoreForm.addEventListener("submit", function (event) {
   highscoreInputEl.disabled = true;
 });
 clearHighscoreEl.addEventListener("click", clearHighscore);
-viewHighscoreEl.addEventListener("click", () => viewHighscore(false));
+viewHighscoreEl.addEventListener("click", function () {
+  viewHighscore(false);
+});
 
 //start of functions in program
 
@@ -191,24 +195,9 @@ function setQuestionChoices(answerChoices) {
 }
 
 //calculates if the userInput was correct
-function userInput(event) {
-  var input = "";
-  var element = event.target;
-  if (questionCount === questionBank.length - 1) {
-    endQuiz();
-    clearInterval(timeInterval);
-    return;
-  }
-  // console.log(element);
-  input = element.getAttribute("data-choice");
-  console.log(questionCount);
-  console.log("input: " + input);
-  if (input === questionBank[questionCount].correctAnswer) {
-    decisionEl.textContent = decisionEl.getAttribute("data-correct");
-  } else {
-    decisionEl.textContent = decisionEl.getAttribute("data-wrong");
-    mainTimer -= 5;
-  }
+function answerClicked(target) {
+  checkLastQuestionAnswered();
+  checkAccuracy();
 
   var toastInterval = setInterval(function () {
     decisionEl.textContent = "";
@@ -216,6 +205,24 @@ function userInput(event) {
   }, 1000);
   questionCount++;
   renderQuestion(questionBank[questionCount]);
+}
+
+function checkLastQuestionAnswered() {
+  if (questionCount === questionBank.length - 1) {
+    endQuiz();
+    clearInterval(timeInterval);
+    return;
+  }
+}
+
+function checkAccuracy() {
+  var input = target.getAttribute("data-choice");
+  if (input === questionBank[questionCount].correctAnswer) {
+    decisionEl.textContent = decisionEl.getAttribute("data-correct");
+  } else {
+    decisionEl.textContent = decisionEl.getAttribute("data-wrong");
+    mainTimer -= 5;
+  }
 }
 
 function endQuiz() {
