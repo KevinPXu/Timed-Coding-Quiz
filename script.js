@@ -196,23 +196,16 @@ function setQuestionChoices(answerChoices) {
 
 //calculates if the userInput was correct
 function answerClicked(target) {
-  checkLastQuestionAnswered();
+  if (questionCount === questionBank.length - 1) {
+    endQuiz();
+    return;
+  }
   checkAccuracy();
-
+  incrementQuestion();
   var toastInterval = setInterval(function () {
     decisionEl.textContent = "";
     clearInterval(toastInterval);
   }, 1000);
-  questionCount++;
-  renderQuestion(questionBank[questionCount]);
-}
-
-function checkLastQuestionAnswered() {
-  if (questionCount === questionBank.length - 1) {
-    endQuiz();
-    clearInterval(timeInterval);
-    return;
-  }
 }
 
 function checkAccuracy() {
@@ -225,6 +218,11 @@ function checkAccuracy() {
   }
 }
 
+function incrementQuestion() {
+  questionCount++;
+  renderQuestion(questionBank[questionCount]);
+}
+
 function endQuiz() {
   console.log("hello");
   mainContEl.setAttribute("id", "hideQuestions");
@@ -232,6 +230,7 @@ function endQuiz() {
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
   highscoreEl.setAttribute("id", "highscoreContainer");
   questionCount = 0;
+  clearInterval(timeInterval);
 }
 
 function storeHighscore(initials) {
