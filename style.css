@@ -71,6 +71,14 @@ button {
   display: none;
 }
 
+#highscoreForm {
+  display: contents;
+}
+
+#hideForm {
+  display: none;
+}
+
 #highscoreContainer {
   display: flex;
   justify-content: center;

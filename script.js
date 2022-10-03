@@ -130,9 +130,10 @@ highscoreForm.addEventListener("submit", function (event) {
   storeHighscore(highscoreInput);
   renderHighscore();
   highscoreInput.value = "";
+  highscoreInputEl.disabled = true;
 });
 clearHighscoreEl.addEventListener("click", clearHighscore);
-viewHighscoreEl.addEventListener("click", viewHighscore);
+viewHighscoreEl.addEventListener("click", () => viewHighscore(false));
 
 //start of functions in program
 
@@ -152,7 +153,9 @@ function restartQuiz() {
   mainHeaderEl.setAttribute("id", "mainHeaderContainer");
   highscoreHeaderEl.setAttribute("id", "hiddenHighscoreHeader");
   highscoreEl.setAttribute("id", "hiddenHighScore");
+  highscoreForm.setAttribute("id", "highscoreForm");
   renderQuestions(questionCount);
+  highscoreInputEl.disabled = false;
 }
 
 //sets a timer to count down and act as a score for the quiz
@@ -229,10 +232,6 @@ function storeHighscore(initials) {
   person.initials = initials;
   person.score = mainTimer;
   console.log(person.score);
-  //TODO: for loop to sort array of highscores
-  // for (var i in highscores){
-  //   if (person.score < highscore[i].)
-  // }
   highscores.push(person);
   highscores.sort((a, b) => b.score - a.score);
   console.log(highscores);
@@ -256,12 +255,15 @@ function clearHighscore() {
   renderHighscore();
 }
 
-function viewHighscore() {
+function viewHighscore(finishedQuiz = true) {
   mainContEl.setAttribute("id", "hideQuestions");
   mainHeaderEl.setAttribute("id", "hideMainHeader");
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
   highscoreEl.setAttribute("id", "highscoreContainer");
   startContEl.setAttribute("id", "hiddenStart");
+  if (!finishedQuiz) {
+    highscoreForm.setAttribute("id", "hideForm");
+  }
   renderHighscore();
   clearInterval(timeInterval);
 }
