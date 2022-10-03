@@ -171,19 +171,23 @@ function setTimer() {
 
 //renders the next question after the button is pressed
 function renderQuestion(question) {
-  answerChoiceEl.innerHTML = " ";
   setQuestionText(question.question);
-  for (var i in question.answerChoices) {
-    var ansChoice = document.createElement("button");
-    ansChoice.setAttribute("data-choice", [i]);
-    var ansChoiceCont = document.createTextNode(question.answerChoices[i]);
-    ansChoice.appendChild(ansChoiceCont);
-    answerChoiceEl.appendChild(ansChoice);
-  }
+  setQuestionChoices(question.answerChoices);
 }
 
 function setQuestionText(questionText) {
   document.getElementById("question").textContent = questionText;
+}
+
+function setQuestionChoices(answerChoices) {
+  answerChoiceEl.innerHTML = " ";
+  for (var i in answerChoices) {
+    var ansChoice = document.createElement("button");
+    ansChoice.setAttribute("data-choice", [i]);
+    var ansChoiceCont = document.createTextNode(answerChoices[i]);
+    ansChoice.appendChild(ansChoiceCont);
+    answerChoiceEl.appendChild(ansChoice);
+  }
 }
 
 //calculates if the userInput was correct
