@@ -24,8 +24,13 @@
 }
 #highscoreHeaderContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: var(--highscore-header-background);
+}
+
+#hsTitle {
+  justify-self: center;
+  align-self: center;
 }
 
 #startContainer {
@@ -39,6 +44,9 @@
   display: none;
 }
 
+#container {
+  display: contents;
+}
 #hideQuestions {
   display: none;
 }
@@ -46,9 +54,6 @@
 #questionDisplay {
   display: flex;
   justify-content: center;
-}
-#question {
-  color: blue;
 }
 
 #answerChoices {

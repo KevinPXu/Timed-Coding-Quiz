@@ -1,5 +1,6 @@
 var startContEl = document.querySelector("#startContainer");
 var startBtnEl = document.querySelector("#startButton");
+var restartBtnEl = document.querySelector("#restartQuiz");
 var timerEl = document.querySelector("#timer");
 var mainContEl = document.querySelector("#container");
 var questionEl = document.querySelector("#question");
@@ -55,7 +56,7 @@ var questionBank = [
   },
 ];
 startBtnEl.addEventListener("click", startQuiz);
-
+restartBtnEl.addEventListener("click", restartQuiz);
 //adds event listener to the buttons and runs the UserInput
 answerChoiceEl.addEventListener("click", userInput);
 
@@ -78,6 +79,15 @@ function startQuiz() {
   console.log("test start");
   startContEl.setAttribute("id", "hiddenStart");
   setTimer();
+  renderQuestions(questionCount);
+}
+
+function restartQuiz() {
+  setTimer();
+  mainContEl.setAttribute("id", "container");
+  mainHeaderEl.setAttribute("id", "mainHeaderContainer");
+  highscoreHeaderEl.setAttribute("id", "hiddenHighscoreHeader");
+  highscoreEl.setAttribute("id", "hiddenHighScore");
   renderQuestions(questionCount);
 }
 
@@ -138,8 +148,9 @@ function endQuiz() {
   mainHeaderEl.setAttribute("id", "hideMainHeader");
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
   highscoreEl.setAttribute("id", "highscoreContainer");
-  storeHighscore();
   renderHighscore();
+  mainTimer = 60;
+  questionCount = 0;
 }
 
 function storeHighscore(initials) {
@@ -149,17 +160,23 @@ function storeHighscore(initials) {
   };
   person.initials = initials;
   person.score = mainTimer;
+  console.log(person.score);
   //TODO: for loop to sort array of highscores
-  mainTimer = 60;
+  // for (var i in highscores){
+  //   if (person.score < highscore[i].)
+  // }
+  highscores.push(person);
+  highscores.sort((a, b) => a.score - b.score);
+  console.log(highscores);
   localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
 function renderHighscore() {
-  console.log(highscores);
+  //console.log(highscores);
   for (var i in highscores) {
     var highscore = highscores[i];
     var li = document.createElement("li");
-    li.textContent = highscore;
+    li.textContent = highscore + ": " + highscores[i].person.score;
     highscoreListEl.appendChild(li);
   }
 }
