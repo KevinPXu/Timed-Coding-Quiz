@@ -126,6 +126,7 @@ highscoreForm.addEventListener("submit", function (event) {
   }
   storeHighscore(highscoreInput);
   renderHighscore();
+  mainTimer = 61;
   highscoreInput.value = "";
   highscoreInputEl.disabled = true;
 });
@@ -207,11 +208,6 @@ function answerClicked(target) {
 }
 
 function checkAccuracy(target) {
-  var input = target.getAttribute("data-choice");
-  console.log(target.textContent);
-  console.log("input:" + input);
-  console.log("correct answer" + questionBank[questionCount].correctAnswer);
-  console.log(input === questionBank[questionCount].correctAnswer);
   if (target.textContent === questionBank[questionCount].correctAnswer) {
     decisionEl.textContent = decisionEl.getAttribute("data-correct");
   } else {
@@ -226,7 +222,6 @@ function incrementQuestion() {
 }
 
 function endQuiz() {
-  console.log("hello");
   mainContEl.setAttribute("id", "hideQuestions");
   mainHeaderEl.setAttribute("id", "hideMainHeader");
   highscoreHeaderEl.setAttribute("id", "highscoreHeaderContainer");
@@ -236,22 +231,15 @@ function endQuiz() {
 }
 
 function storeHighscore(initials) {
-  var person = {
-    initials: "",
-    score: "",
-  };
-  person.initials = initials;
-  person.score = mainTimer;
-  console.log(person.score);
-  highscores.push(person);
+  highscores.push({
+    initials,
+    score: mainTimer,
+  });
   highscores.sort((a, b) => b.score - a.score);
-  console.log(highscores);
   localStorage.setItem("highscores", JSON.stringify(highscores));
-  mainTimer = 61;
 }
 
 function renderHighscore() {
-  console.log("highscores:" + JSON.stringify(highscores));
   highscoreListEl.innerHTML = "";
   for (var i in highscores) {
     var highscore = highscores[i];
