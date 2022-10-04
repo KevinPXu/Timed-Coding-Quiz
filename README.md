@@ -12,63 +12,68 @@
 
 ## Link to Application
 
-https://kevinpxu.github.io/Professional-Portfolio/
+https://kevinpxu.github.io/Timed-Coding-Quiz/
 
 ## Summary
 
-This project was used to teach myself about creating a webpage from the ground up using both HTML and CSS to structure and design the site. It allowed me to have a better understanding of how to structure the HTML file in relation to the CSS file. I also was able to use some creativity to manipulate the CSS file and create elements that are unique and functional at the same time.
+This project was used to teach myself about creating a webpage dynamically from the ground up using JavaScript and web API's to allow for an interactive webpage. I was able to use JavaScript to dynamically add buttons to the quiz which allows for you to easily add questions of different number of answer choices. I also used the web API features to manipulate the DOM dynamically within Javascript to essentially create three different webpages within one script. The project was a great introduction to learning how to create more dynamic websites. 
 
-## Screenshots
+## Demonstration
 
-<img src="./Assets/images/Screenshot.png" alt="Screenshot">
-
+![A user clicks through an interactive coding quiz, then enters initials to save the high score before resetting and starting over.](./Assets/Coding%20Quiz.gif)
 ## Description
 
-Profile page of a portfolio of all currently completed projects. Includes name, biography of myself and contact information. Images of different projects will take you to the given repository containing that project.
+Dynamic coding quiz with 10 questions and a timer that counts as your score. When you load into the page, you are presented with instructions and a start button. When you hit the start button, a timer will start and the first question is presented. As you move through the quiz, each incorrect answer will take five seconds off your timer. After either you finish the questions or time runs out, a high score screen will be displayed. You will be allowed to add your initials and save your score, only one score per quiz session. You will be allowed to reset the highscore when you would like, and you will be presented with a restart quiz button. That button will restart the quiz from the first question and will allow you put another highscore. The highscores are ordered from highest to lowest. While taking the quiz you can view the highscores at any time but you will be forced to restart the quiz if you choose. On view highscore there will be no input for highscores.
 
 ## Code Snippet
 
-### Profile picture inline text wrap
+### Functions to dynamically create the questions and to clear the questions when a choice is clicked
 
-```HTML
-<aside id="Biography">
-          <h2>Biography</h2>
+```JavaScript
+function setQuestion(question) {
+  setQuestionText(question.questionText);
+  setQuestionChoices(question.answerChoices);
+}
 
-          <p class="Bio-content">
-            <!-- Profile Picture -->
-            <img
-              class="profilepic"
-              src="./Assets/images/Monkey-Selfie.webp"
-              alt="Placeholder Monkey"
-            />
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim id est laborum.
-          </p>
-        </aside>
+function setQuestionText(questionText) {
+  document.getElementById("question").textContent = questionText;
+}
+
+function setQuestionChoices(answerChoices) {
+  answerChoicesEl.innerHTML = " ";
+  for (var i in answerChoices) {
+    var ansChoice = document.createElement("button");
+    ansChoice.addEventListener("click", function (event) {
+      answerClicked(event.target);
+    });
+    var ansChoiceCont = document.createTextNode(answerChoices[i]);
+    ansChoice.appendChild(ansChoiceCont);
+    answerChoicesEl.appendChild(ansChoice);
+  }
+}
 ```
 
-### CSS styling for the above code to wrap profile picture
+### Function to show and store the highscores 
+```JavaScript
+function storeHighscore(initials) {
+  highscores.push({
+    initials,
+    score: mainTimer,
+  });
+  highscores.sort((a, b) => b.score - a.score);
+  localStorage.setItem("highscores", JSON.stringify(highscores));
+}
 
-```CSS
-/* settings for the profile picture, making sure it wrapped by the text*/
-#Biography .Bio-content .profilepic {
-  width: 100px;
-  height: 150px;
-  float: left;
-  padding: 10px;
+function renderHighscore() {
+  highscoreListEl.innerHTML = "";
+  for (var highscore of highscores) {
+    var li = document.createElement("li");
+    li.textContent = highscore.initials + ": " + highscore.score;
+    highscoreListEl.appendChild(li);
+  }
+}
 ```
+
 
 ## Author Links
 
