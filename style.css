@@ -8,47 +8,32 @@
 * {
   box-sizing: border-box;
 }
-
+/* Headers */
 #mainHeaderContainer {
   display: flex;
   justify-content: space-between;
   background-color: var(--header-background);
 }
 
-#hideMainHeader {
-  display: none;
-}
 
-#hiddenHighscoreHeader {
-  display: none;
-}
 #highscoreHeaderContainer {
   display: flex;
   justify-content: space-between;
   background-color: var(--highscore-header-background);
 }
 
+/* Main content */
 #hsTitle {
   justify-self: center;
   align-self: center;
 }
+
 
 #startContainer {
   display: flex;
   justify-content: center;
   align-content: center;
   flex-direction: column;
-}
-
-#hiddenStart {
-  display: none;
-}
-
-#container {
-  display: contents;
-}
-#hideQuestions {
-  display: none;
 }
 
 #questionDisplay {
@@ -67,18 +52,6 @@ button {
   margin: 5px;
 }
 
-#hiddenHighScore {
-  display: none;
-}
-
-#highscoreForm {
-  display: contents;
-}
-
-#hideForm {
-  display: none;
-}
-
 #highscoreContainer {
   display: flex;
   justify-content: center;
@@ -86,6 +59,41 @@ button {
   flex-direction: column;
 }
 
+
+/* toggles to hide and show elements */
+
 #highscoreList {
   list-style: none;
+}
+
+#hideMainHeader {
+  display: none;
+}
+
+#hideQuestions {
+  display: none;
+}
+
+#hiddenHighscoreHeader {
+  display: none;
+}
+
+#hiddenHighScore {
+  display: none;
+}
+
+#hideForm {
+  display: none;
+}
+
+#hiddenStart {
+  display: none;
+}
+
+#highscoreForm {
+  display: contents;
+}
+
+#container {
+  display: contents;
 }

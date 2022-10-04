@@ -1,3 +1,4 @@
+// created a list of querySelectors to select specific areas of the HTML to dynamically modify
 var startContEl = document.querySelector("#startContainer");
 var startBtnEl = document.querySelector("#startButton");
 var restartBtnEl = document.querySelector("#restartQuiz");
@@ -22,6 +23,7 @@ var questionCount = 0;
 var mainTimer = 61;
 var highscores = [];
 var timeInterval = "";
+//question bank for quiz, can easily add new questions with different number of answer choices
 var questionBank = [
   {
     questionText: "What does the method split do to a string?",
@@ -115,9 +117,11 @@ var questionBank = [
 ];
 
 //all event listeners for buttons and form element in the highscore page
+//event listener for start button
 startBtnEl.addEventListener("click", startQuiz);
+//event listener for restart button on highscore screen
 restartBtnEl.addEventListener("click", restartQuiz);
-//stores initials from form and stores it in an array
+//stores initials from form and stores it in an array on submit of form
 highscoreForm.addEventListener("submit", function (event) {
   event.preventDefault();
   var highscoreInput = highscoreInputEl.value.trim();
@@ -130,7 +134,9 @@ highscoreForm.addEventListener("submit", function (event) {
   highscoreInput.value = "";
   highscoreInputEl.disabled = true;
 });
+//event listener for clearing the highscore
 clearHighscoreEl.addEventListener("click", clearHighscore);
+//event listener for view highscore button
 viewHighscoreEl.addEventListener("click", function () {
   viewHighscore(false);
 });
@@ -177,10 +183,12 @@ function setQuestion(question) {
   setQuestionChoices(question.answerChoices);
 }
 
+//set the text for each question
 function setQuestionText(questionText) {
   document.getElementById("question").textContent = questionText;
 }
 
+//creates element in the HTML depending on number of answer choices for that question. Also adds an event listener to each button.
 function setQuestionChoices(answerChoices) {
   answerChoicesEl.innerHTML = " ";
   for (var i in answerChoices) {
@@ -194,7 +202,7 @@ function setQuestionChoices(answerChoices) {
   }
 }
 
-//calculates if the userInput was correct
+//calculates if the answer choice chosen was correct and displays a message temporarily with a toaster timer 
 function answerClicked(target) {
   if (questionCount === questionBank.length - 1) {
     endQuiz();
@@ -208,6 +216,7 @@ function answerClicked(target) {
   }, 1000);
 }
 
+//function for above to check if the answer chosen was correct or incorrect
 function checkAccuracy(target) {
   if (target.textContent === questionBank[questionCount].correctAnswer) {
     decisionEl.textContent = decisionEl.getAttribute("data-correct");
@@ -217,11 +226,13 @@ function checkAccuracy(target) {
   }
 }
 
+//function to increment the question as each question is set
 function incrementQuestion() {
   questionCount++;
   setQuestion(questionBank[questionCount]);
 }
 
+//ends the quiz by hiding the questions and showing the hidden highscore elements
 function endQuiz() {
   mainContEl.setAttribute("id", "hideQuestions");
   mainHeaderEl.setAttribute("id", "hideMainHeader");
@@ -231,6 +242,7 @@ function endQuiz() {
   clearInterval(timeInterval);
 }
 
+//stores the highscore by adding the initial and the time to an object, will sort the highscores after it is pushed to the array and stringifys the array to local storage
 function storeHighscore(initials) {
   highscores.push({
     initials,
@@ -240,6 +252,7 @@ function storeHighscore(initials) {
   localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
+//shows the highscores by creating elements depending on the length of the array
 function renderHighscore() {
   highscoreListEl.innerHTML = "";
   for (var highscore of highscores) {
@@ -249,11 +262,13 @@ function renderHighscore() {
   }
 }
 
+//clears the highscore array and rerenders the highscore to clear the html
 function clearHighscore() {
   highscores = [];
   renderHighscore();
 }
 
+// toggles the ids to show the highscore elements and hide everything else on the screen and renders the highscores, also clears intervals for quiz restart
 function viewHighscore(finishedQuiz = true) {
   mainContEl.setAttribute("id", "hideQuestions");
   mainHeaderEl.setAttribute("id", "hideMainHeader");

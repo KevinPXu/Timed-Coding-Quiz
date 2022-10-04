@@ -10,15 +10,18 @@
 
   <body>
     <header>
+      <!-- Header for main quiz screens -->
       <section id="mainHeaderContainer">
         <button id="viewHighScore">View Highscore</button>
         <h4 id="timer"></h4>
       </section>
+      <!-- Header for highscore screen -->
       <section id="hiddenHighscoreHeader">
         <button id="restartQuiz">Restart Quiz</button>
         <h1 id="hsTitle">Highscores</h1>
       </section>
     </header>
+    <!-- Starting screen -->
     <section id="startContainer">
       <h1>Coding Quiz</h1>
       <p>
@@ -27,6 +30,8 @@
       </p>
       <button id="startButton">START</button>
     </section>
+
+    <!-- Question Screen -->
     <section id="container">
       <div id="questionDisplay">
         <h2 id="question"></h2>
@@ -36,6 +41,8 @@
         <h2 id="decision" data-correct="Correct!" data-wrong="Incorrect!"></h2>
       </div>
     </section>
+
+    <!-- Highscore screen -->
     <section id="hiddenHighScore">
       <form id="highscoreForm">
         <label for="initials">Your initials</label>
